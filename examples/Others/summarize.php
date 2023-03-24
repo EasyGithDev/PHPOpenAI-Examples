@@ -1,6 +1,6 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
+
 use EasyGithDev\PHPOpenAI\Model;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
@@ -8,7 +8,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 $text = '';
 if (isset($_POST['submit'])) {
-    $apiKey = "XXXXXXX YOUR KEY";
+    $apiKey = getenv('OPENAI_API_KEY');
     if (file_exists(Configuration::$_configDir . '/key.php')) {
         $apiKey = require Configuration::$_configDir . '/key.php';
     }

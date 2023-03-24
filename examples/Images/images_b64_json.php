@@ -1,7 +1,5 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
-use EasyGithDev\PHPOpenAI\Images\Image;
 use EasyGithDev\PHPOpenAI\Images\ImageSize;
 use EasyGithDev\PHPOpenAI\Images\ResponseFormat;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
@@ -13,22 +11,14 @@ function displayImg($data)
     return '<img src="data:image/png;base64, ' . $data . '" alt="DALL-E 2" />';
 }
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
 
-$configuration = new Configuration($apiKey);
-$openAIApi = new OpenAIApi($configuration);
-$image = $openAIApi->Image();
-
-$response = $image->create(
+$response = (new OpenAIApi($apiKey))->Image()->create(
     "An old poster with a woman and a cat, in the style of Charley Harper",
     n: 2,
     size: ImageSize::is256,
     response_format: ResponseFormat::B64_JSON
 );
-
 ?>
 
 <!doctype html>

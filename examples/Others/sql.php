@@ -1,15 +1,13 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
+
 use EasyGithDev\PHPOpenAI\Model;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
+
 
 $prompt = "Create a SQL request to find all users who live in California and have over 1000 credits:";
 

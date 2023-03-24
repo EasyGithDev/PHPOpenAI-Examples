@@ -1,6 +1,6 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
+
 use EasyGithDev\PHPOpenAI\Images\ImageSize;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
@@ -17,10 +17,8 @@ function displayUrl($url)
     return '<img src="' . $url . '" />';
 }
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
+
 
 $response = (new OpenAIApi($apiKey))->Image()->create(
     "a rabbit inside a beautiful garden, 32 bit isometric",

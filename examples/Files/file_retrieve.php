@@ -1,19 +1,22 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
+$apiKey = getenv('OPENAI_API_KEY');
+
+if (isset($_POST['submit'])) {
+    try {
+        $response = (new OpenAIApi($apiKey))
+            ->File()
+            ->retrieve($_POST['file_id'])->throwable();
+    } catch (ApiException $e) {
+        echo nl2br($e->getMessage());
+        die;
+    }
 }
-
-$response = (new OpenAIApi($apiKey))
-    ->File()
-    ->retrieve('file-wKTCLLGV4SsacPLaAd5Nyo1o');
-
 ?>
 
 <!doctype html>
@@ -25,13 +28,17 @@ $response = (new OpenAIApi($apiKey))
 </head>
 
 <body>
+    <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
+        <input type="text" name='file_id'>
+        <input type="submit" name='submit'>
+    </form>
+    <?php if (isset($_POST['submit'])) : ?>
+        <div>
+            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
+        </div>
 
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-    <?= $response->toObject()->filename ?>
-
+        <?= $response->toObject()->filename ?>
+    <?php endif ?>
 </body>
 
 </html>

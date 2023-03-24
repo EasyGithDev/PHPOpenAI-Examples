@@ -1,16 +1,14 @@
 <?php
 
 use EasyGithDev\PHPOpenAI\Chats\Message;
-use EasyGithDev\PHPOpenAI\Configuration;
+
 use EasyGithDev\PHPOpenAI\Models\ModelEnum;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
+
 
 $response = (new OpenAIApi($apiKey))->Chat()->create(
     ModelEnum::GPT_3_5_TURBO,

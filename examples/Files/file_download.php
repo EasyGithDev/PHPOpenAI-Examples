@@ -1,20 +1,23 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
 
-$response = (new OpenAIApi($apiKey))
-    ->File()
-    ->download('file-l7aGxLssbuLLKyWKFGDz9cJ7');
-$json_response = json_decode($response);
+
+if (isset($_POST['submit'])) {
+    try {
+        $response = (new OpenAIApi($apiKey))
+            ->File()
+            ->download($_POST['file_id'])->throwable();
+    } catch (ApiException $e) {
+        echo nl2br($e->getMessage());
+        die;
+    }
+}
 
 // Unable to test at this moment
 // "error": {
@@ -35,13 +38,17 @@ $json_response = json_decode($response);
 </head>
 
 <body>
-
-    <div>
-        <label>Response :
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-        </label>
-    </div>
-
+    <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
+        <input type="text" name='file_id'>
+        <input type="submit" name='submit'>
+    </form>
+    <?php if (isset($_POST['submit'])) : ?>
+        <div>
+            <label>Response :
+                <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
+            </label>
+        </div>
+    <?php endif ?>
 </body>
 
 </html>

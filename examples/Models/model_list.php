@@ -1,6 +1,6 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Configuration;
+
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -11,10 +11,8 @@ function normalize($str)
     return mb_strtoupper($str);
 }
 
-$apiKey = "XXXXXXX YOUR KEY";
-if (file_exists(Configuration::$_configDir . '/key.php')) {
-    $apiKey = require Configuration::$_configDir . '/key.php';
-}
+$apiKey = getenv('OPENAI_API_KEY');
+
 
 $response = (new OpenAIApi($apiKey))->Model()->list();
 
