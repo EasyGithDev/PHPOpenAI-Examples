@@ -1,0 +1,32 @@
+{
+    "name": "easygithdev/phpopenaiexamples",
+    "description": "Examples for the project PHPOpenAI",
+    "keywords": [
+        "php",
+        "ai",
+        "openai",
+        "dalle",
+        "dall-e",
+        "gpt-3",
+        "gpt-3.5",
+        "gpt3",
+        "gpt3.5",
+        "whisper",
+        "api",
+        "curl",
+        "phpopenai",
+        "easygithdev"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florent Brusciano",
+            "email": "easygithdev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "easygithdev/phpopenai": "*"
+    }
+}
