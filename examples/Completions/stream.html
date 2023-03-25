@@ -1,0 +1,61 @@
+<html>
+
+<body>
+    <div id="result"></div>
+    <script>
+
+        /**
+         * This function is same as PHP's nl2br() with default parameters.
+         *
+         * @param {string} str Input text
+         * @param {boolean} replaceMode Use replace instead of insert
+         * @param {boolean} isXhtml Use XHTML 
+         * @return {string} Filtered text
+         */
+        function nl2br(str, replaceMode, isXhtml) {
+
+            var breakTag = (isXhtml) ? '<br />' : '<br>';
+            var replaceStr = (replaceMode) ? '$1' + breakTag : '$1' + breakTag + '$2';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
+        }
+
+        if (typeof (EventSource) !== 'undefined') {
+            console.info('Starting connection...');
+            var source = new EventSource('stream.php');
+            source.addEventListener('open', function (e) {
+                console.info('Connection was opened.');
+            }, false);
+
+            source.addEventListener('error', function (e) {
+                var txt;
+                switch (event.target.readyState) {
+                    // if reconnecting
+                    case EventSource.CONNECTING:
+                        txt = 'Reconnecting...';
+                        break;
+                    // if error was fatal
+                    case EventSource.CLOSED:
+                        txt = 'Connection failed. Will not retry.';
+                        break;
+                }
+                console.error('Connection error: ' + txt);
+            }, false);
+
+            source.addEventListener('message', function (e) {
+                console.log(e.data);
+                if (e.data == "[DONE]") {
+                    // alert(e.data);
+                    source.close();
+                    return;
+                }
+                document.getElementById('result').innerHTML += nl2br(JSON.parse(e.data).choices[0].text);
+
+            }, false);
+        } else {
+            alert('Your browser does not support Server-sent events! Please upgrade it!');
+            console.error('Connection aborted');
+        }
+    </script>
+</body>
+
+</html>
