@@ -1,5 +1,6 @@
 <?php
 
+
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
@@ -9,9 +10,24 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 if (isset($_POST['submit'])) {
     try {
-        $response = (new OpenAIApi($apiKey))
+
+
+        $files = (new OpenAIApi($apiKey))
             ->File()
-            ->retrieve($_POST['file_id'])->getResponse()->throwable();
+            ->list()
+            ->getResponse()
+            ->toObject();
+
+        foreach ($files->data as $file) {
+            $id = $file->id;
+            $response = (new OpenAIApi($apiKey))
+                ->File()
+                ->delete($id)
+                ->getResponse()
+                ->throwable();
+
+            echo ($response->toObject()->deleted) ? "file $id is deleted" : "$id not deleted";
+        }
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -24,20 +40,14 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>File retrieve</title>
+    <title>File delete</title>
 </head>
 
 <body>
+    WARNING !!!!
     <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
-        <input type="text" name='file_id'>
         <input type="submit" name='submit'>
     </form>
-    <?php if (isset($_POST['submit'])) : ?>
-        <div>
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-        </div>
-
-    <?php endif ?>
 </body>
 
 </html>

@@ -18,7 +18,7 @@ try {
         frequency_penalty: 0.5,
         presence_penalty: 0.0,
         stop: ["You:"]
-    )->throwable();
+    )->getResponse()->throwable();
 
 //echo '<pre>', var_dump($response->getInfos()), '</pre>';
 

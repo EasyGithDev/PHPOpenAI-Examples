@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     try {
         $response = (new OpenAIApi($apiKey))
             ->File()
-            ->download($_POST['file_id'])->throwable();
+            ->download($_POST['file_id'])->getResponse()->throwable();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;

@@ -18,7 +18,7 @@ try {
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
         stop: ["#", ";"]
-    )->throwable();
+    )->getResponse()->throwable();
 
 //echo '<pre>', var_dump($response->getInfos()), '</pre>';
 

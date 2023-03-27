@@ -18,7 +18,7 @@ $response = (new OpenAIApi($apiKey))->Chat()->create(
         new Message(Message::ROLE_ASSISTANT, "The Los Angeles Dodgers won the World Series in 2020."),
         new Message(Message::ROLE_USER, "Where was it played?"),
     ]
-);
+)->getResponse();
 
 ?>
 

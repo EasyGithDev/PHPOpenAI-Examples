@@ -10,7 +10,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 $response = (new OpenAIApi($apiKey))
     ->FineTune()
-    ->list();
+    ->list()->getResponse();
 ?>
 
 <!doctype html>

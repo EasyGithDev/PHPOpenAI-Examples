@@ -10,7 +10,8 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 $response = (new OpenAIApi($apiKey))
     ->File()
-    ->list();
+    ->list()
+    ->getResponse();
 
 ?>
 
@@ -27,10 +28,6 @@ $response = (new OpenAIApi($apiKey))
     <div>
         <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
     </div>
-
-    <?php foreach ($response->fetchAll() as $id) : ?>
-        <div> <?= $id ?> </div>
-    <?php endforeach; ?>
 
 </body>
 

@@ -10,7 +10,8 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 $response = (new OpenAIApi($apiKey))
     ->Moderation()
-    ->create('I want to kill them.');
+    ->create('I want to kill them.')
+    ->getResponse();
 
 ?>
 
@@ -27,10 +28,6 @@ $response = (new OpenAIApi($apiKey))
     <div>
         <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
     </div>
-
-    <?php var_dump($response->categories()) ?>
-
-    <?php var_dump($response->scores()) ?>
 
 </body>
 

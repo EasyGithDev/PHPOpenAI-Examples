@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
         ->FineTune()
         ->create(
             $_POST['file_id']
-        );
+        )->getResponse();
 }
 
 ?>
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
-        <input type="text" name='file_id'>
+        <input type="text" name='file_id' value="file-">
         <input type="submit" name='submit'>
     </form>
     <?php if (isset($_POST['submit'])) : ?>

@@ -18,7 +18,7 @@ try {
         frequency_penalty: 0.0,
         presence_penalty: 0.6,
         stop: [" Human:", " AI:"]
-    )->throwable();
+    )->getResponse()->throwable();
 
 //echo '<pre>', var_dump($response->getInfos()), '</pre>';
 

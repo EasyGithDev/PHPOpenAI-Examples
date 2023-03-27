@@ -14,7 +14,7 @@ function normalize($str)
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIApi($apiKey))->Model()->list();
+$response = (new OpenAIApi($apiKey))->Model()->list()->getResponse();
 
 ?>
 
@@ -31,13 +31,6 @@ $response = (new OpenAIApi($apiKey))->Model()->list();
     <div>
         <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
     </div>
-
-
-    <?php foreach ($response->fetchAll() as $model) : ?>
-        <div>
-            <?= 'case ' . normalize($model) . '="' .  $model . '";' ?>
-        </div>
-    <?php endforeach; ?>
 
 </body>
 

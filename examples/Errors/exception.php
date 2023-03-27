@@ -10,7 +10,7 @@ try {
     $response = (new OpenAIApi('BAD KEY'))->Completion()->create(
         ModelEnum::TEXT_DAVINCI_003,
         "Say this is a test",
-    )->throwable();
+    )->getResponse()->throwable();
 } catch (ApiException $e) {
     echo nl2br($e->getMessage());
     die;

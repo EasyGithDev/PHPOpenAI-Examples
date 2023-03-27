@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
             ->Model()
             ->delete(
                 $_POST['model']
-            )->throwable();
+            )->getResponse()->throwable();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
         <div>
             <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
         </div>
-        <?= $response->toObject()->id ?>
+        <?= $response->toObject()->data->id ?>
     <?php endif ?>
 
 </body>

@@ -13,7 +13,7 @@ $response = (new OpenAIApi($apiKey))
     ->create(
         __DIR__ . '/../../assets/mydata.jsonl',
         'fine-tune',
-    );
+    )->getResponse();
 ?>
 
 <!doctype html>

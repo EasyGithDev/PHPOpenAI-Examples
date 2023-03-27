@@ -15,7 +15,7 @@ $response = (new OpenAIApi($apiKey))->Audio()->transcription(
     __DIR__ . '/../../assets/openai.mp3',
     ModelEnum::WHISPER_1,
     responseFormat: ResponseFormat::SRT
-);
+)->getResponse();
 
 ?>
 
@@ -31,10 +31,6 @@ $response = (new OpenAIApi($apiKey))->Audio()->transcription(
 
     <div>
         <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-    <div>
-        <?= $response->text() ?>
     </div>
 
 </body>

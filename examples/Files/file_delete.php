@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     try {
         $response = (new OpenAIApi($apiKey))
             ->File()
-            ->delete($_POST['file_id'])->throwable();
+            ->delete($_POST['file_id'])->getResponse()->throwable();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
-        <input type="text" name='file_id'>
+        <input type="text" name='file_id' value="file-">
         <input type="submit" name='submit'>
     </form>
     <?php if (isset($_POST['submit'])) : ?>

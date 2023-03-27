@@ -17,4 +17,4 @@ $apiKey = getenv('OPENAI_API_KEY');
     frequency_penalty: 0.0,
     presence_penalty: 0.0,
     stream: true
-);
+)->getResponse();

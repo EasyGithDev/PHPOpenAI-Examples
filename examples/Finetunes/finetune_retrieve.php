@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
             ->FineTune()
             ->retrieve(
                 $_POST['fine_tune_id']
-            )->throwable();
+            )->getResponse()->throwable();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
-        <input type="text" name='fine_tune_id'>
+        <input type="text" name='fine_tune_id' value="ft-">
         <input type="submit" name='submit'>
     </form>
     <?php if (isset($_POST['submit'])) : ?>

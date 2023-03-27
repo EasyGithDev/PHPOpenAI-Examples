@@ -14,7 +14,7 @@ $response = (new OpenAIApi($apiKey))->Completion()->create(
     top_p:1.0,
     frequency_penalty:0.0,
     presence_penalty:0.0
-);
+)->getResponse();
 
 // echo '<pre>', var_dump($response->getInfos()), '</pre>';
 
