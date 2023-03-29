@@ -1,7 +1,7 @@
 <?php
 
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -14,7 +14,7 @@ function normalize($str)
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIApi($apiKey))->Model()->list()->getResponse();
+$response = (new OpenAIClient($apiKey))->Model()->list()->getResponse();
 
 ?>
 

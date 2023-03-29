@@ -1,12 +1,12 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-$response = (new OpenAIApi($apiKey))->Completion()->create(
+$response = (new OpenAIClient($apiKey))->Completion()->create(
     model:"text-davinci-003",
     prompt:"Correct this to standard English:\n\nShe no went to the market.",
     temperature:0,

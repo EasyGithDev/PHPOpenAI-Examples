@@ -1,9 +1,8 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Audios\ResponseFormat;
-
-use EasyGithDev\PHPOpenAI\Models\ModelEnum;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\Helpers\AudioResponseEnum;
+use EasyGithDev\PHPOpenAI\Helpers\ModelEnum;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -11,10 +10,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIApi($apiKey))->Audio()->translation(
+$response = (new OpenAIClient($apiKey))->Audio()->translation(
     __DIR__ . '/../../assets/openai_fr.mp3',
     ModelEnum::WHISPER_1,
-    responseFormat: ResponseFormat::TEXT
+    audioResponse: AudioResponseEnum::TEXT
 )->getResponse();
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 
-
-use EasyGithDev\PHPOpenAI\Images\ImageSize;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
+use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -13,13 +13,16 @@ function displayUrl($url)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-
-$response = (new OpenAIApi($apiKey))->Image()->createVariation(
-    __DIR__ . '/../../assets/image_variation_original.png',
-    n: 2,
-    size: ImageSize::is256
-);
-
+try {
+    $response = (new OpenAIClient($apiKey))->Image()->createVariation(
+        __DIR__ . '/../../assets/image_variation_original.png',
+        n: 2,
+        size: ImageSizeEnum::is256
+    )->toObject();
+} catch (ApiException $e) {
+    echo nl2br($e->getMessage());
+    die;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -31,13 +34,9 @@ $response = (new OpenAIApi($apiKey))->Image()->createVariation(
 
 <body>
 
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
 
-    </div>
-
-    <?php foreach ($response->urlImages() as $image) : ?>
-        <div> <?= displayUrl($image) ?> </div>
+    <?php foreach ($response->data as $image) : ?>
+        <div> <?= displayUrl($image->url) ?> </div>
     <?php endforeach; ?>
 
 </body>

@@ -2,7 +2,7 @@
 
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -10,7 +10,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 if (isset($_POST['submit'])) {
     try {
-        $response = (new OpenAIApi($apiKey))
+        $response = (new OpenAIClient($apiKey))
             ->FineTune()
             ->retrieve(
                 $_POST['fine_tune_id']

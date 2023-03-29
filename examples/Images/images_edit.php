@@ -1,8 +1,8 @@
 <?php
 
-
-use EasyGithDev\PHPOpenAI\Images\ImageSize;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
+use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -13,14 +13,17 @@ function displayUrl($url)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-
-$response = (new OpenAIApi($apiKey))->Image()->createEdit(
-    image: __DIR__ . '/../../assets/image_edit_original.png',
-    mask: __DIR__ . '/../../assets/image_edit_mask2.png',
-    prompt: 'a sunlit indoor lounge area with a pool containing a flamingo',
-    size: ImageSize::is512,
-);
-
+try {
+    $response = (new OpenAIClient($apiKey))->Image()->createEdit(
+        image: __DIR__ . '/../../assets/image_edit_original.png',
+        mask: __DIR__ . '/../../assets/image_edit_mask2.png',
+        prompt: 'a sunlit indoor lounge area with a pool containing a flamingo',
+        size: ImageSizeEnum::is512,
+    )->toObject();
+} catch (ApiException $e) {
+    echo nl2br($e->getMessage());
+    die;
+}
 ?>
 
 <!doctype html>
@@ -33,12 +36,8 @@ $response = (new OpenAIApi($apiKey))->Image()->createEdit(
 
 <body>
 
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-    <?php foreach ($response->urlImages() as $image) : ?>
-        <div> <?= displayUrl($image) ?> </div>
+    <?php foreach ($response->data as $image) : ?>
+        <div> <?= displayUrl($image->url) ?> </div>
     <?php endforeach; ?>
 
 </body>

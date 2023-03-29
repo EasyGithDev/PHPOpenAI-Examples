@@ -1,14 +1,14 @@
 <?php
 
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIApi($apiKey))
+$response = (new OpenAIClient($apiKey))
     ->File()
     ->list()
     ->getResponse();

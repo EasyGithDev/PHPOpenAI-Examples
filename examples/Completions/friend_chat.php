@@ -1,7 +1,7 @@
 <?php
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -9,7 +9,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 try {
 
-    $response = (new OpenAIApi($apiKey))->Completion()->create(
+    $response = (new OpenAIClient($apiKey))->Completion()->create(
         model: "text-davinci-003",
         prompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend:",
         temperature: 0.5,

@@ -1,8 +1,8 @@
 <?php
 
-use EasyGithDev\PHPOpenAI\Images\ImageSize;
-use EasyGithDev\PHPOpenAI\Images\ResponseFormat;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\Helpers\ImageResponseEnum;
+use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -13,12 +13,14 @@ function displayImg($data)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-$response = (new OpenAIApi($apiKey))->Image()->create(
-    "An old poster with a woman and a cat, in the style of Charley Harper",
-    n: 2,
-    size: ImageSize::is256,
-    response_format: ResponseFormat::B64_JSON
-);
+$response = (new OpenAIClient($apiKey))
+    ->Image()
+    ->create(
+        "An old poster with a woman and a cat, in the style of Charley Harper",
+        n: 2,
+        size: ImageSizeEnum::is256,
+        response_format: ImageResponseEnum::B64_JSON
+    )->toObject();
 ?>
 
 <!doctype html>
@@ -31,12 +33,8 @@ $response = (new OpenAIApi($apiKey))->Image()->create(
 
 <body>
 
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-    <?php foreach ($response->b64Images() as $image) : ?>
-        <div> <?= displayImg($image) ?> </div>
+    <?php foreach ($response->data as $image) : ?>
+        <div> <?= displayImg($image->b64_json) ?> </div>
     <?php endforeach; ?>
 
 </body>

@@ -1,14 +1,14 @@
 <?php
 
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIApi($apiKey))->Model()->retrieve('text-davinci-001')->getResponse();
+$response = (new OpenAIClient($apiKey))->Model()->retrieve('text-davinci-001')->getResponse();
 
 ?>
 

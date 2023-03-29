@@ -1,8 +1,7 @@
 <?php
 
-
-use EasyGithDev\PHPOpenAI\Images\ImageSize;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -19,12 +18,11 @@ function displayUrl($url)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-
-$response = (new OpenAIApi($apiKey))->Image()->create(
+$response = (new OpenAIClient($apiKey))->Image()->create(
     "a rabbit inside a beautiful garden, 32 bit isometric",
     n: 2,
-    size: ImageSize::is256,
-);
+    size: ImageSizeEnum::is256,
+)->toObject();
 ?>
 
 <!doctype html>
@@ -37,12 +35,8 @@ $response = (new OpenAIApi($apiKey))->Image()->create(
 
 <body>
 
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-    <?php foreach ($response->urlImages() as $image) : ?>
-        <div> <?= displayUrl($image) ?> </div>
+    <?php foreach ($response->data as $image) : ?>
+        <div> <?= displayUrl($image->url) ?> </div>
     <?php endforeach; ?>
 
 </body>

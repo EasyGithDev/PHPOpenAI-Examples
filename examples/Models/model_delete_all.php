@@ -2,7 +2,7 @@
 
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     try {
 
 
-        $files = (new OpenAIApi($apiKey))
+        $files = (new OpenAIClient($apiKey))
             ->FineTune()
             ->list()
             ->getResponse()
@@ -21,12 +21,12 @@ if (isset($_POST['submit'])) {
         foreach ($files->data as $file) {
             $id = $file->fine_tuned_model;
             if (empty($id) or is_null($id)) continue;
-            $response = (new OpenAIApi($apiKey))
+            $response = (new OpenAIClient($apiKey))
                 ->Model()
                 ->delete($id)
                 ->getResponse();
                 
-            if ($response->isOk()) {
+            if ($response->isStatusOk()) {
                 echo ($response->toObject()->deleted) ? "$id is deleted" : "$id not deleted", '<br>';
             }
         }

@@ -2,13 +2,13 @@
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-(new OpenAIApi($apiKey))->Completion()->create(
+(new OpenAIClient($apiKey))->Completion()->create(
     model: "text-davinci-003",
     prompt: "Translate this into 1. French, 2. Spanish and 3. Japanese:\n\nWhat rooms do you have available?\n\n1.",
     temperature: 0.3,

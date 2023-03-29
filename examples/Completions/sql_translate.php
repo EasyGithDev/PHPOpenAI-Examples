@@ -1,7 +1,7 @@
 <?php
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -9,7 +9,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 try {
 
-    $response = (new OpenAIApi($apiKey))->Completion()->create(
+    $response = (new OpenAIClient($apiKey))->Completion()->create(
         model: "code-davinci-002",
         prompt: "### Postgres SQL tables, with their properties:\n#\n# Employee(id, name, department_id)\n# Department(id, name, address)\n# Salary_Payments(id, employee_id, amount, date)\n#\n### A query to list the names of the departments which employed more than 10 employees in the last 3 months\nSELECT",
         temperature: 0,

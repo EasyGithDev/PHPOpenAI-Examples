@@ -1,14 +1,14 @@
 <?php
 
 
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
 if (isset($_POST['submit'])) {
-    $response = (new OpenAIApi($apiKey))
+    $response = (new OpenAIClient($apiKey))
         ->FineTune()
         ->create(
             $_POST['file_id']

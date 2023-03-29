@@ -1,7 +1,7 @@
 <?php
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -9,7 +9,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 try {
 
-    $response = (new OpenAIApi($apiKey))->Completion()->create(
+    $response = (new OpenAIClient($apiKey))->Completion()->create(
         model: "text-davinci-003",
         prompt: "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: I'd like to cancel my subscription.\nAI:",
         temperature: 0.9,

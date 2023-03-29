@@ -2,7 +2,7 @@
 
 
 use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
-use EasyGithDev\PHPOpenAI\OpenAIApi;
+use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     try {
 
 
-        $files = (new OpenAIApi($apiKey))
+        $files = (new OpenAIClient($apiKey))
             ->File()
             ->list()
             ->getResponse()
@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 
         foreach ($files->data as $file) {
             $id = $file->id;
-            $response = (new OpenAIApi($apiKey))
+            $response = (new OpenAIClient($apiKey))
                 ->File()
                 ->delete($id)
                 ->getResponse()
