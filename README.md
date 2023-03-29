@@ -47,36 +47,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 use EasyGithDev\PHPOpenAI\Models\ModelEnum;
 use EasyGithDev\PHPOpenAI\OpenAIApi;
 
-$response = (new OpenAIApi("YOUR_KEY"))->Completion()->create(
+$response = (new OpenAIClient($apiKey))->Completion()->create(
     ModelEnum::TEXT_DAVINCI_003,
     "Say this is a test",
-);
+)->toObject();
 
-var_dump($response);
+// Response as stClass object
+echo '<pre>', print_r($response, true), '</pre>';
 ```
 
-This code instantiates a new `OpenAIApi` object with an API key, and then creates a new `Completion` object to perform text completion with the GPT-3 AI language model provided by OpenAI.
-
-The `create()` method is called on the `Completion` object to generate a new text completion. It takes two parameters:
-
-- the first parameter is the ID of the GPT-3 model to use for completion. In this case, it uses the TEXT_DAVINCI_003 model.
-- the second parameter is the prompt or input text for which the completion will be generated. In this case, the prompt is "Say this is a test".
-
-The result of the completion is returned in the `$response` variable. The result can then be used for further processing, such as displaying the completed text or feeding it into another part of the program for additional processing.
-
-
-## Manage the API Key
-
-You can use an environment variable to store your key. You can then use this variable as in the following example:
-
-```bash
-export OPENAI_API_KEY="sk-xxxxxxxxxxx"
-```
-
-```php
-<?php
-$response = (new OpenAIApi(getenv('OPENAI_API_KEY')))->Completion()->create(
-    ModelEnum::TEXT_DAVINCI_003,
-    "Say this is a test",
-);
-```
+The full documentation is here :
+[https://github.com/EasyGithDev/PHPOpenAI](https://github.com/EasyGithDev/PHPOpenAI).
