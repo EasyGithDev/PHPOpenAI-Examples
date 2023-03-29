@@ -14,7 +14,10 @@ function normalize($str)
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIClient($apiKey))->Model()->list()->getResponse();
+$response = (new OpenAIClient($apiKey))
+    ->Model()
+    ->list()
+    ->getResponse();
 
 ?>
 

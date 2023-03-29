@@ -8,7 +8,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 $apiKey = getenv('OPENAI_API_KEY');
 
 
-$response = (new OpenAIClient($apiKey))->Model()->retrieve('text-davinci-001')->getResponse();
+$response = (new OpenAIClient($apiKey))
+    ->Model()
+    ->retrieve('text-davinci-001')
+    ->getResponse();
 
 ?>
 
