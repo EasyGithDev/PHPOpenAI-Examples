@@ -10,11 +10,12 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 (new OpenAIClient($apiKey))->Completion()->create(
     model: "text-davinci-003",
-    prompt: "Translate this into 1. French, 2. Spanish and 3. Japanese:\n\nWhat rooms do you have available?\n\n1.",
-    temperature: 0.3,
-    max_tokens: 100,
+    prompt: 'Writing a dissertation on "the meaning of life in the 21st century" as Barack Obama',
+    temperature: 0.5,
+    max_tokens: 2048,
     top_p: 1.0,
-    frequency_penalty: 0.0,
+    frequency_penalty: 0.3,
     presence_penalty: 0.0,
+    echo: true,
     stream: true
 )->getResponse();
