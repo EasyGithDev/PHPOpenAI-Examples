@@ -18,7 +18,6 @@ $response = (new OpenAIClient($apiKey))
     ->Model()
     ->list()
     ->getResponse();
-
 ?>
 
 <!doctype html>
@@ -34,6 +33,12 @@ $response = (new OpenAIClient($apiKey))
     <div>
         <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
     </div>
+
+    <?php
+    foreach ($response->toObject()->data as $key => $value) {
+        echo normalize($value->id), "=>'", $value->id, "'<br>";
+    }
+    ?>
 
 </body>
 
