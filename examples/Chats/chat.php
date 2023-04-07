@@ -18,23 +18,6 @@ $response = (new OpenAIClient($apiKey))->Chat()->create(
         new ChatMessage(ChatMessage::ROLE_ASSISTANT, "The Los Angeles Dodgers won the World Series in 2020."),
         new ChatMessage(ChatMessage::ROLE_USER, "Where was it played?"),
     ]
-)->getResponse();
+)->toObject();
 
-?>
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Chat completion</title>
-</head>
-
-<body>
-
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-</body>
-
-</html>
+echo '<pre>', var_dump($response), '</pre>';
