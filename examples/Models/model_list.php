@@ -13,28 +13,9 @@ function normalize($str)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-
 $response = (new OpenAIClient($apiKey))
     ->Model()
     ->list()
-    ->getResponse();
+    ->toObject();
 
-?>
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Model list</title>
-</head>
-
-<body>
-
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-
-</body>
-
-</html>
+echo '<pre>', var_dump($response), '</pre>';

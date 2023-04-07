@@ -24,7 +24,6 @@ $response = (new OpenAIClient($apiKey))->Image()->create(
     size: ImageSizeEnum::is256,
 )->toObject();
 ?>
-
 <!doctype html>
 <html lang="en">
 

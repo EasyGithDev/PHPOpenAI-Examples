@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
                 ->getResponse()
                 ->throwable();
 
-            echo ($response->toObject()->deleted) ? "file $id is deleted" : "$id not deleted";
+            echo ($response->toObject()->deleted) ? "file $id is deleted<br>" : "$id not deleted<br>";
         }
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
@@ -34,7 +34,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -44,7 +43,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    WARNING !!!!
+    <strong>WARNING this will delete all your files !!!!</strong>
     <form action="<?= $_SERVER['PHP_SELF']  ?>" method="POST">
         <input type="submit" name='submit'>
     </form>

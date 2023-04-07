@@ -10,21 +10,7 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 $response = (new OpenAIClient($apiKey))
     ->FineTune()
-    ->list()->getResponse();
-?>
+    ->list()
+    ->toObject();
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Finetune list</title>
-</head>
-
-<body>
-    <div>
-        <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-    </div>
-</body>
-
-</html>
+echo '<pre>', var_dump($response), '</pre>';

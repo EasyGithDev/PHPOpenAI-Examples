@@ -12,14 +12,15 @@ if (isset($_POST['submit'])) {
     try {
         $response = (new OpenAIClient($apiKey))
             ->File()
-            ->delete($_POST['file_id'])->getResponse()->throwable();
+            ->delete($_POST['file_id'])
+            ->getResponse()
+            ->throwable();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
     }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
 

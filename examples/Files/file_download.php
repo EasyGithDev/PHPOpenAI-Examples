@@ -7,7 +7,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-
 if (isset($_POST['submit'])) {
     try {
         $response = (new OpenAIClient($apiKey))
@@ -20,15 +19,6 @@ if (isset($_POST['submit'])) {
         die;
     }
 }
-
-// Unable to test at this moment
-// "error": {
-//     "message": "To help mitigate abuse, downloading of fine-tune training files is disabled for free accounts.",
-//     "type": "invalid_request_error",
-//     "param": null,
-//     "code": null
-//   }
-
 ?>
 
 <!doctype html>

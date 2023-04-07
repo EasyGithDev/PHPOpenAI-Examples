@@ -22,7 +22,6 @@ $response = (new OpenAIClient($apiKey))
         response_format: ImageResponseEnum::B64_JSON
     )->toObject();
 ?>
-
 <!doctype html>
 <html lang="en">
 
