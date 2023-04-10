@@ -11,7 +11,8 @@ if (isset($_POST['submit'])) {
     try {
         $response = (new OpenAIClient($apiKey))
             ->File()
-            ->retrieve($_POST['file_id'])->getResponse()->throwable();
+            ->retrieve($_POST['file_id'])
+            ->toObject();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -33,7 +34,7 @@ if (isset($_POST['submit'])) {
     </form>
     <?php if (isset($_POST['submit'])) : ?>
         <div>
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
+            <pre> <?= print_r($response, true) ?> </pre>
         </div>
 
     <?php endif ?>

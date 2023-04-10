@@ -18,11 +18,9 @@ try {
         frequency_penalty: 0.5,
         presence_penalty: 0.0,
         stop: ["You:"]
-    )->getResponse()->throwable();
+    )->toObject();
 
-//echo '<pre>', var_dump($response->getInfos()), '</pre>';
-
-    foreach ($response->toObject()->choices as $choice) {
+    foreach ($response->choices as $choice) {
         echo nl2br(trim($choice->text));
     }
 } catch (ApiException $e) {

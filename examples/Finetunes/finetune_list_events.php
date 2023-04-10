@@ -14,12 +14,15 @@ if (isset($_POST['submit'])) {
             ->FineTune()
             ->listEvents(
                 $_POST['fine_tune_id']
-            )->getResponse()->throwable();
+            )
+            ->toObject();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
     }
 }
+
+
 
 ?>
 <!doctype html>
@@ -37,7 +40,7 @@ if (isset($_POST['submit'])) {
     </form>
     <?php if (isset($_POST['submit'])) : ?>
         <div>
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
+            <pre><?= var_dump($response) ?></pre>
         </div>
     <?php endif ?>
 

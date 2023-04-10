@@ -1,6 +1,6 @@
 <?php
 
-
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -8,11 +8,16 @@ require __DIR__ . '/../../vendor/autoload.php';
 $apiKey = getenv('OPENAI_API_KEY');
 
 if (isset($_POST['submit'])) {
+    try {
     $response = (new OpenAIClient($apiKey))
         ->FineTune()
         ->create(
             $_POST['file_id']
-        )->getResponse();
+        )->toObject();
+
+    } catch (ApiException $e) {
+        echo nl2br($e->getMessage());
+    }
 }
 
 ?>
@@ -30,10 +35,7 @@ if (isset($_POST['submit'])) {
         <input type="submit" name='submit'>
     </form>
     <?php if (isset($_POST['submit'])) : ?>
-        <div>
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-        </div>
-        <?= $response->toObject()->id ?>
+        <?= $response->id ?>
     <?php endif ?>
 
 </body>

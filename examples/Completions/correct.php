@@ -14,10 +14,9 @@ $response = (new OpenAIClient($apiKey))->Completion()->create(
     top_p:1.0,
     frequency_penalty:0.0,
     presence_penalty:0.0
-)->getResponse();
+)->toObject();
 
-// echo '<pre>', var_dump($response->getInfos()), '</pre>';
 
-foreach ($response->toObject()->choices as $choice) {
+foreach ($response->choices as $choice) {
     echo nl2br(trim($choice->text));
 }

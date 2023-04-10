@@ -1,5 +1,6 @@
 <?php
 
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\Helpers\ImageResponseEnum;
 use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
 use EasyGithDev\PHPOpenAI\OpenAIClient;
@@ -13,14 +14,19 @@ function displayImg($data)
 
 $apiKey = getenv('OPENAI_API_KEY');
 
-$response = (new OpenAIClient($apiKey))
-    ->Image()
-    ->create(
-        "An old poster with a woman and a cat, in the style of Charley Harper",
-        n: 2,
-        size: ImageSizeEnum::is256,
-        response_format: ImageResponseEnum::B64_JSON
-    )->toObject();
+try {
+    $response = (new OpenAIClient($apiKey))
+        ->Image()
+        ->create(
+            "An old poster with a woman and a cat, in the style of Charley Harper",
+            n: 2,
+            size: ImageSizeEnum::is256,
+            response_format: ImageResponseEnum::B64_JSON
+        )->toObject();
+} catch (ApiException $e) {
+    echo nl2br($e->getMessage());
+    die;
+}
 ?>
 <!doctype html>
 <html lang="en">

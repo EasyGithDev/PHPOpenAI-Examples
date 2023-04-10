@@ -1,3 +1,4 @@
 /config/key.php
 /vendor
 composer.lock
+.vscode
