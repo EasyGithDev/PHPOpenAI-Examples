@@ -1,5 +1,6 @@
 <?php
 
+use EasyGithDev\PHPOpenAI\Exceptions\ApiException;
 use EasyGithDev\PHPOpenAI\Helpers\ImageSizeEnum;
 use EasyGithDev\PHPOpenAI\OpenAIClient;
 
@@ -17,12 +18,16 @@ function displayUrl($url)
 }
 
 $apiKey = getenv('OPENAI_API_KEY');
-
-$response = (new OpenAIClient($apiKey))->Image()->create(
-    "a rabbit inside a beautiful garden, 32 bit isometric",
-    n: 2,
-    size: ImageSizeEnum::is256,
-)->toObject();
+try {
+    $response = (new OpenAIClient($apiKey))->Image()->create(
+        "a rabbit inside a beautiful garden, 32 bit isometric",
+        n: 2,
+        size: ImageSizeEnum::is256,
+    )->toObject();
+} catch (ApiException $e) {
+    echo nl2br($e->getMessage());
+    die;
+}
 ?>
 <!doctype html>
 <html lang="en">

@@ -13,8 +13,7 @@ if (isset($_POST['submit'])) {
         $response = (new OpenAIClient($apiKey))
             ->File()
             ->delete($_POST['file_id'])
-            ->getResponse()
-            ->throwable();
+            ->toObject();
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
         die;
@@ -35,11 +34,7 @@ if (isset($_POST['submit'])) {
         <input type="submit" name='submit'>
     </form>
     <?php if (isset($_POST['submit'])) : ?>
-
-        <div>
-            <textarea name="response" id="response" cols="100" rows="30"><?= $response ?></textarea>
-        </div>
-        <?= ($response->toObject()->deleted) ? 'file is deleted' : 'not deleted' ?>
+        <?= ($response->deleted) ? 'file is deleted' : 'not deleted' ?>
     <?php endif ?>
 
 </body>

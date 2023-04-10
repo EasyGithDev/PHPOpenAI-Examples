@@ -11,22 +11,15 @@ $apiKey = getenv('OPENAI_API_KEY');
 if (isset($_POST['submit'])) {
     try {
 
+        $client = new OpenAIClient($apiKey);
+        $handler = $client->File();
 
-        $files = (new OpenAIClient($apiKey))
-            ->File()
-            ->list()
-            ->getResponse()
-            ->toObject();
-
+        $files = $handler->list()->toObject();
         foreach ($files->data as $file) {
             $id = $file->id;
-            $response = (new OpenAIClient($apiKey))
-                ->File()
-                ->delete($id)
-                ->getResponse()
-                ->throwable();
+            $response = $handler->delete($id)->toObject();
 
-            echo ($response->toObject()->deleted) ? "file $id is deleted<br>" : "$id not deleted<br>";
+            echo ($response->deleted) ? "file $id is deleted<br>" : "$id not deleted<br>";
         }
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());

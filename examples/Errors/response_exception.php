@@ -6,6 +6,8 @@ use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+// Depreciate, it will removed in the next step
+
 try {
     $response = (new OpenAIClient('BAD KEY'))
         ->Completion()
