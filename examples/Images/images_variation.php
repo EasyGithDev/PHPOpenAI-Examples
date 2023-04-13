@@ -14,11 +14,13 @@ function displayUrl($url)
 $apiKey = getenv('OPENAI_API_KEY');
 
 try {
-    $response = (new OpenAIClient($apiKey))->Image()->createVariation(
-        __DIR__ . '/../../assets/image_variation_original.png',
-        n: 2,
-        size: ImageSizeEnum::is256
-    )->toObject();
+    $response = (new OpenAIClient($apiKey))->Image()
+        ->addCurlParam('timeout', 30)
+        ->createVariation(
+            __DIR__ . '/../../assets/image_variation_original.png',
+            n: 2,
+            size: ImageSizeEnum::is256
+        )->toObject();
 } catch (ApiException $e) {
     echo nl2br($e->getMessage());
     die;

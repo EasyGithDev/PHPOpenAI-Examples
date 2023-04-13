@@ -14,7 +14,9 @@ function displayUrl($url)
 $apiKey = getenv('OPENAI_API_KEY');
 
 try {
-    $response = (new OpenAIClient($apiKey))->Image()->createEdit(
+    $response = (new OpenAIClient($apiKey))->Image()
+        ->addCurlParam('timeout', 30)
+        ->createEdit(
         image: __DIR__ . '/../../assets/image_edit_original.png',
         mask: __DIR__ . '/../../assets/image_edit_mask2.png',
         prompt: 'a sunlit indoor lounge area with a pool containing a flamingo',
