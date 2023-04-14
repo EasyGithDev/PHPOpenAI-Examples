@@ -14,7 +14,6 @@ if (isset($_POST['submit'])) {
 
         $files = $client->FineTune()
             ->list()
-            ->getResponse()
             ->toObject();
 
         foreach ($files->data as $file) {
@@ -26,11 +25,9 @@ if (isset($_POST['submit'])) {
 
             $response = $client->Model()
                 ->delete($id)
-                ->getResponse();
+                ->toObject();
 
-            if ($response->isStatusOk()) {
-                echo ($response->toObject()->deleted) ? "$id is deleted<br>" : "$id not deleted<br>", '<br>';
-            }
+            echo ($response->deleted) ? "$id is deleted<br>" : "$id not deleted<br>", '<br>';
         }
     } catch (ApiException $e) {
         echo nl2br($e->getMessage());
