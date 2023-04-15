@@ -1,35 +1,32 @@
 <?php
-header('Content-Type: text/event-stream');
-header('Cache-Control: no-cache');
 
 use EasyGithDev\PHPOpenAI\OpenAIClient;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$apiKey = getenv('OPENAI_API_KEY');
+function gen()
+{
+    $cpt = 1;
+    $isCreated = false;
+    $apiKey = getenv('OPENAI_API_KEY');
+    $handler = (new OpenAIClient($apiKey))->FineTune();
+    do {
+        $response = $handler->listEvents(
+            'ft-....'
+        )->getResponse();
 
-if (!isset($_GET['fine_tune_id'])) {
-    echo 'need a fine_tune_id';
-    die;
+        $data = json_decode($response)->data;
+        $message = $data[count($data) - 1]->message;
+        $isCreated = ($message == 'Fine-tune succeeded') ? true : false;
+
+        yield $cpt => $message;
+        $cpt++;
+    } while ($cpt < 20 && !$isCreated);
 }
 
-$isCreated = false;
-$cpt = 1;
-do {
-    $response = (new OpenAIClient($apiKey))
-        ->FineTune()
-        ->listEvents(
-            $_GET['fine_tune_id']
-        )->toObject();
-
-    $data = $response->data;
-    $message = $data[count($data) - 1]->message;
-    $isCreated = ($message == 'Fine-tune succeeded') ? true : false;
-    $cpt++;
-
+foreach (gen() as $cpt => $msg) {
+    echo "$cpt:$msg<br>";
     ob_flush();
     flush();
-    sleep(30);
-} while ($cpt <= 10 && !$isCreated);
-
-echo ($isCreated) ? 'OK fine-tune-created' : 'NO sorry';
+    sleep(10);
+}
