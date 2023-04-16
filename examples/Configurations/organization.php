@@ -9,7 +9,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 $apiKey = getenv('OPENAI_API_KEY');
 $org = getenv('OPENAI_API_ORG');
 
-// Passing the configuration to the client
+// Passing the organization to the client
 $response = (new OpenAIClient($apiKey, $org))
     ->Completion()
     ->create(
