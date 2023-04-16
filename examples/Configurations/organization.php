@@ -2,19 +2,15 @@
 
 use EasyGithDev\PHPOpenAI\Helpers\ModelEnum;
 use EasyGithDev\PHPOpenAI\OpenAIClient;
-use EasyGithDev\PHPOpenAI\OpenAIConfiguration;
+use EasyGithDev\PHPOpenAI\Curl\CurlOutput;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
 $apiKey = getenv('OPENAI_API_KEY');
 $org = getenv('OPENAI_API_ORG');
 
-// Create a new configuration object
-// with the key and the organization
-$config = new OpenAIConfiguration($apiKey, $org);
-
 // Passing the configuration to the client
-$response = (new OpenAIClient($config))
+$response = (new OpenAIClient($apiKey, $org))
     ->Completion()
     ->create(
         ModelEnum::TEXT_DAVINCI_003,
