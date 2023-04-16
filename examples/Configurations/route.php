@@ -18,7 +18,8 @@ $route = new OpenAIRoute(
 echo $route->completionCreate() , '<br>';
 
 // Passing the router to the client
-$response = (new OpenAIClient($apiKey, $route))
+$response = (new OpenAIClient($apiKey))
+    ->setRoute($route)
     ->Completion()
     ->create(
         ModelEnum::TEXT_DAVINCI_003,
